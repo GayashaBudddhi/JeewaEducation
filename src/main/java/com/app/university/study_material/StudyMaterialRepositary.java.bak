@@ -1,0 +1,31 @@
+package com.app.university.study_material;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
+import org.hibernate.SQLQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.university.subject.Subject;
+
+public interface StudyMaterialRepositary extends JpaRepository<StudyMaterial, Integer> {
+
+	
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)	
+	@Query(value="SELECT * FROM study_material INNER JOIN material_type ON study_material.document_type = material_type.material_type_id INNER JOIN lecture ON study_material.user_id = lecture.user_id INNER JOIN `subject` ON study_material.subject_id = `subject`.subject_id WHERE study_material. STATUS =?1 AND study_material.user_id =?2 ",nativeQuery = true)
+
+	ArrayList <StudyMaterial> getAlLupdatedmaterailbylecture(int status,int userId);
+	
+
+
+}
